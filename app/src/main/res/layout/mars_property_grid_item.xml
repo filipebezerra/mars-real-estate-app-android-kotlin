@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"
+            />
+        <variable
+            name="property"
+            type="com.example.android.marsrealestate.data.MarsProperty"
+            />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{clickListener}"
+        >
+
+        <ImageView
+            android:id="@+id/property_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/propery_image_item_height"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/propery_image_item_spacing"
+            android:contentDescription="@string/mars_property_image_content_description"
+            android:scaleType="centerCrop"
+            app:imageFromUrl="@{property.imageUrl}"
+            tools:src="@tools:sample/backgrounds/scenic"
+            />
+    </FrameLayout>
+</layout>

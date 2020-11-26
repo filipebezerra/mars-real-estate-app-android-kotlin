@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="propery_image_item_spacing">2dp</dimen>
+    <dimen name="propery_image_item_height">170dp</dimen>
+    <dimen name="mars_property_list_spacing">6dp</dimen>
+</resources>
