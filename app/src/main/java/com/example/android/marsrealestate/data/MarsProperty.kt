@@ -19,7 +19,9 @@ package com.example.android.marsrealestate.data
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class MarsProperty(
@@ -27,4 +29,6 @@ data class MarsProperty(
     @Json(name = "img_src") val imageUrl: String,
     val type: String,
     val price: Double,
-) : Parcelable
+) : Parcelable {
+    @IgnoredOnParcel val isRental = type.toLowerCase(Locale.getDefault()) == "rent"
+}
