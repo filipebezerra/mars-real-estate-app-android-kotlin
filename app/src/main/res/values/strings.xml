@@ -31,4 +31,5 @@
     </string>
     <string name="retry_load_mars_properties">Retry</string>
     <string name="error_loading_image_content_description">Error loading mars properties image</string>
+    <string name="filter">Filter</string>
 </resources>

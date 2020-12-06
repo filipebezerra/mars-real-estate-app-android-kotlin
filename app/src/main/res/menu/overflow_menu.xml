@@ -17,14 +17,30 @@
   ~
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <item
-        android:id="@+id/show_all_menu"
-        android:title="@string/show_all" />
-    <item
-        android:id="@+id/show_rent_menu"
-        android:title="@string/show_rent" />
-    <item
-        android:id="@+id/show_buy_menu"
-        android:title="@string/show_buy" />
+        android:id="@+id/filter_mars_property_list"
+        android:icon="@drawable/ic_filter_list_24"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom"
+        >
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/show_all_properties"
+                    android:title="@string/show_all"
+                    />
+                <item
+                    android:id="@+id/show_for_rent_properties"
+                    android:title="@string/show_rent"
+                    />
+                <item
+                    android:id="@+id/show_for_buy_properties"
+                    android:title="@string/show_buy"
+                    />
+            </group>
+        </menu>
+    </item>
 </menu>

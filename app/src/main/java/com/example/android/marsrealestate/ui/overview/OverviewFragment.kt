@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.data.remote.MarsPropertyFilter
 import com.example.android.marsrealestate.databinding.OverviewFragmentBinding
 import com.example.android.marsrealestate.ui.util.ext.SnackBarAction
 import com.example.android.marsrealestate.ui.util.ext.setupSnackbar
@@ -37,11 +38,9 @@ class OverviewFragment : Fragment() {
     /**
      * Lazily initialize our [OverviewViewModel].
      */
-    private val overviewViewModel: OverviewViewModel by viewModels()
+    private val viewModel: OverviewViewModel by viewModels()
 
     private lateinit var viewBinding: OverviewFragmentBinding
-
-    private val navController: NavController by lazy { findNavController() }
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
@@ -54,10 +53,11 @@ class OverviewFragment : Fragment() {
     ): View = OverviewFragmentBinding.inflate(inflater).apply {
         viewBinding = this
         lifecycleOwner = viewLifecycleOwner
-        viewModel = overviewViewModel
+        viewModel = this@OverviewFragment.viewModel
 
         setHasOptionsMenu(true)
         createMarsPropertyAdapter()
+        subscribeUi()
     }.root
 
     private fun createMarsPropertyAdapter() {
@@ -66,14 +66,22 @@ class OverviewFragment : Fragment() {
         }
     }
 
+    private fun subscribeUi() {
+        with(viewModel) {
+            propertyFilter.observe(viewLifecycleOwner) {
+                activity?.invalidateOptionsMenu()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setupSnackbar(
                 viewLifecycleOwner,
-                overviewViewModel.snackBarText,
+                viewModel.snackBarText,
                 LENGTH_INDEFINITE,
                 action = SnackBarAction(R.string.retry_load_mars_properties) {
-                    overviewViewModel.loadMarsRealEstateProperties()
+                    viewModel.loadMarsRealEstateProperties()
                 }
         )
     }
@@ -85,4 +93,24 @@ class OverviewFragment : Fragment() {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        when (viewModel.propertyFilter.value) {
+            MarsPropertyFilter.FOR_RENT -> R.id.show_for_rent_properties
+            MarsPropertyFilter.FOR_BUY -> R.id.show_for_buy_properties
+            else -> R.id.show_all_properties
+        }.run { menu.findItem(this) }.apply { this.isChecked = true }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.show_all_properties,
+        R.id.show_for_rent_properties,
+        R.id.show_for_buy_properties -> {
+            viewModel.updatePropertyFilter(item.itemId)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
 }

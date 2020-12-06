@@ -22,9 +22,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.marsrealestate.R
-import com.example.android.marsrealestate.data.remote.MarsApi
 import com.example.android.marsrealestate.data.MarsProperty
+import com.example.android.marsrealestate.data.remote.MarsApi
 import com.example.android.marsrealestate.data.remote.MarsApiStatus
+import com.example.android.marsrealestate.data.remote.MarsPropertyFilter
 import com.example.android.marsrealestate.ui.util.event.Event
 import com.example.android.marsrealestate.ui.util.ext.postEvent
 import kotlinx.coroutines.launch
@@ -49,6 +50,12 @@ class OverviewViewModel : ViewModel() {
     val apiCallStatus: LiveData<MarsApiStatus>
         get() = _apiCallStatus
 
+    private val _propertyFilter = MutableLiveData<MarsPropertyFilter>().apply {
+        value = MarsPropertyFilter.ALL
+    }
+    val propertyFilter: LiveData<MarsPropertyFilter>
+        get() = _propertyFilter
+
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
@@ -65,7 +72,9 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _apiCallStatus.value = MarsApiStatus.LOADING
-                _properties.value = MarsApi.retrofitService.getProperties()
+                _properties.value = MarsApi.retrofitService.getProperties(
+                        _propertyFilter.value?.type ?: MarsPropertyFilter.ALL.type
+                )
                 _apiCallStatus.value = MarsApiStatus.SUCCESS
             } catch (t: Exception) {
                 _apiCallStatus.value = MarsApiStatus.ERROR
@@ -73,5 +82,14 @@ class OverviewViewModel : ViewModel() {
                 _snackBarText.postEvent(R.string.fail_to_get_properties_error_message)
             }
         }
+    }
+
+    fun updatePropertyFilter(optionId: Int) {
+        _propertyFilter.value = when (optionId) {
+            R.id.show_for_rent_properties -> MarsPropertyFilter.FOR_RENT
+            R.id.show_for_buy_properties -> MarsPropertyFilter.FOR_BUY
+            else -> MarsPropertyFilter.ALL
+        }
+        getMarsRealEstateProperties()
     }
 }
