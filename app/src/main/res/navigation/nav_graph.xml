@@ -27,7 +27,7 @@
         android:id="@+id/overviewFragment"
         android:name="com.example.android.marsrealestate.ui.overview.OverviewFragment"
         android:label="fragment_overview"
-        tools:layout="@layout/fragment_overview" >
+        tools:layout="@layout/overview_fragment" >
         <action
             android:id="@+id/action_showDetail"
             app:destination="@id/detailFragment" />
@@ -37,7 +37,7 @@
         android:id="@+id/detailFragment"
         android:name="com.example.android.marsrealestate.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail">
+        tools:layout="@layout/detail_fragment">
         <argument
             android:name="property"
             app:argType="com.example.android.marsrealestate.data.MarsProperty"

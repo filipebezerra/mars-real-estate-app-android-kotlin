@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.android.marsrealestate.databinding.FragmentDetailBinding
+import com.example.android.marsrealestate.databinding.DetailFragmentBinding
 import com.example.android.marsrealestate.ui.detail.DetailViewModel.Companion.provideFactory
 
 /**
@@ -41,7 +41,7 @@ class DetailFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View = FragmentDetailBinding.inflate(inflater)
+    ): View = DetailFragmentBinding.inflate(inflater)
             .apply {
                 viewModel = detailViewModel
                 lifecycleOwner = viewLifecycleOwner

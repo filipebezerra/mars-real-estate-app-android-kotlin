@@ -16,7 +16,7 @@ buildscript {
         version_moshi = "1.11.0"
         version_navigation = "1.0.0"
         version_retrofit = "2.9.0"
-        version_recyclerview = "1.2.0-alpha06"
+        version_recyclerview = "1.2.0-beta01"
         version_okhttp = "4.9.0"
         multidex_version = "2.0.1"
         fragment_version = "1.2.5"

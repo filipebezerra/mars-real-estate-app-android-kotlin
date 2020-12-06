@@ -24,7 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
-import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
+import com.example.android.marsrealestate.databinding.OverviewFragmentBinding
 import com.example.android.marsrealestate.ui.util.ext.SnackBarAction
 import com.example.android.marsrealestate.ui.util.ext.setupSnackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE
@@ -39,7 +39,7 @@ class OverviewFragment : Fragment() {
      */
     private val overviewViewModel: OverviewViewModel by viewModels()
 
-    private lateinit var viewBinding: FragmentOverviewBinding
+    private lateinit var viewBinding: OverviewFragmentBinding
 
     private val navController: NavController by lazy { findNavController() }
 
@@ -51,7 +51,7 @@ class OverviewFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View = FragmentOverviewBinding.inflate(inflater).apply {
+    ): View = OverviewFragmentBinding.inflate(inflater).apply {
         viewBinding = this
         lifecycleOwner = viewLifecycleOwner
         viewModel = overviewViewModel

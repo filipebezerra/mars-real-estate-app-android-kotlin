@@ -15,12 +15,13 @@
  *
  */
 
-package com.example.android.marsrealestate
+package com.example.android.marsrealestate.ui.util.binding
 
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.android.marsrealestate.R
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(imageView: ImageView, imageUrl: String?) {
